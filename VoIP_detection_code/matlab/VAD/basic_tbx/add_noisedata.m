@@ -1,28 +1,28 @@
 function [signal,noise]=add_noisedata(s,data,fs,fs1,snr)
-s=s(:);                          % ï¿½ï¿½ï¿½Åºï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-s=s-mean(s);                     % ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-sL=length(s);                    % ï¿½ï¿½ï¿½ï¿½ÅºÅµÄ³ï¿½ï¿½ï¿½
+s=s(:);                          % °ÑÐÅºÅ×ª»»³ÉÁÐÊý¾Ý
+s=s-mean(s);                     % Ïû³ýÖ±Á÷·ÖÁ¿
+sL=length(s);                    % Çó³öÐÅºÅµÄ³¤¶È
 
-if fs~=fs1                       % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÅºÅµÄ²ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½Æµï¿½Ê²ï¿½ï¿½ï¿½ï¿½
-    x=resample(data,fs,fs1);     % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ë´¿ï¿½ï¿½ï¿½ï¿½ï¿½ÅºÅµÄ²ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½Í¬
+if fs~=fs1                       % Èô´¿ÓïÒôÐÅºÅµÄ²ÉÑùÆµÂÊÓëÔëÉùµÄ²ÉÑùÆµÂÊ²»ÏàµÈ
+    x=resample(data,fs,fs1);     % ¶ÔÔëÉùÖØ²ÉÑù£¬Ê¹ÔëÉù²ÉÑùÆµÂÊÓë´¿ÓïÒôÐÅºÅµÄ²ÉÑùÆµÂÊÏàÍ¬
 else
     x=data;
 end
 
-x=x(:);                          % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-x=x-mean(x);                     % ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-xL=length(x);                    % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
-if xL>=sL                        % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½È²ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý½Ø¶Ï»ï¿½ï¿½ï¿½
+x=x(:);                          % °ÑÔëÉùÊý¾Ý×ª»»³ÉÁÐÊý¾Ý
+x=x-mean(x);                     % Ïû³ýÖ±Á÷·ÖÁ¿
+xL=length(x);                    % ÇóÔëÉùÊý¾Ý³¤¶È
+if xL>=sL                        % Èç¹ûÔëÉùÊý¾Ý³¤¶ÈÓëÐÅºÅÊý¾Ý³¤¶È²»µÈ£¬°ÑÔëÉùÊý¾Ý½Ø¶Ï»ò²¹×ã
     x=x(1:sL);
 else
-    disp('Warning: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½Ô²ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ã£¡')
+    disp('Warning: ÔëÉùÊý¾Ý¶ÌÓÚÐÅºÅÊý¾Ý£¬ÒÔ²¹0À´²¹×ã£¡')
     x=[x; zeros(sL-xL,1)];
 end
 
 Sr=snr;
-Es=sum(x.*x);                    % ï¿½ï¿½ï¿½ï¿½ÅºÅµï¿½ï¿½ï¿½ï¿½ï¿½
-Ev=sum(s.*s);                    % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-a=sqrt(Ev/Es/(10^(Sr/10)));      % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-noise=a*x;                       % ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½Öµ
-signal=s+noise;                  % ï¿½ï¿½ï¿½É´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+Es=sum(x.*x);                    % Çó³öÐÅºÅµÄÄÜÁ¿
+Ev=sum(s.*s);                    % Çó³öÔëÉùµÄÄÜÁ¿
+a=sqrt(Ev/Es/(10^(Sr/10)));      % ¼ÆËã³öÔëÉùµÄ±ÈÀýÒò×Ó
+noise=a*x;                       % µ÷ÕûÔëÉùµÄ·ùÖµ
+signal=s+noise;                  % ¹¹³É´øÔëÓïÒô
 
